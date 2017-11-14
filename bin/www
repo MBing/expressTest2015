@@ -12,8 +12,9 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+// Because we use nconf we don't need this line here:
+// var port = normalizePort(process.env.PORT || '3000');
+app.set('port', nconf.get('http:port'));
 
 /**
  * Create HTTP server.
