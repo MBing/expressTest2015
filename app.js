@@ -4,11 +4,39 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var nconf = require('nconf');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// First in, first serve
+// when you want full control over others. (make it non configurable)
+// when using some other command, this will override anyway
+// nconf.overrides({
+//     'http': {
+//       'port': 9000
+//     }
+// });
+
+// use this command: `http__port=8001 bin/www -p 8002`
+nconf.argv({
+    'p': {
+      'alias': 'http:port',
+        'describe': 'The port to listen on'
+    }
+});
+
+nconf.env('__'); // use this command: `http__port=8001 bin/www`
+
+nconf.file('config.json');
+
+nconf.defaults({
+    'http': {
+      'port': 3000
+    }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
