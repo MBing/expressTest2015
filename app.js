@@ -6,8 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var winston = require('winston');
-
 var nunjucks = require('nunjucks');
+
+var ig = require('instagram-node').instagram();
+
+ig.use({
+    client_id: 'YOUR_CLIENT_ID',
+    client_secret: 'YOUR_CLIENT_SECRET'
+});
+
+ig.media_popular(function (err, media, limit) {
+    if (err) {
+        throw err;
+    }
+    console.log(media);
+});
 
 /* Mail winston added, later giving settings */
 // require('winston-mail').Mail; // nothing extra needed, winston-mail will add itself to the winston.transports
