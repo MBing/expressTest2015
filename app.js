@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var nconf = require('nconf');
 var winston = require('winston');
 
+var nunjucks = require('nunjucks');
+
 /* Mail winston added, later giving settings */
 // require('winston-mail').Mail; // nothing extra needed, winston-mail will add itself to the winston.transports
 
@@ -33,6 +35,12 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app
+});
+
 // First in, first serve
 // when you want full control over others. (make it non configurable)
 // when using some other command, this will override anyway
@@ -45,7 +53,7 @@ var app = express();
 // use this command: `http__port=8001 bin/www -p 8002`
 nconf.argv({
     'p': {
-      'alias': 'http:port',
+        'alias': 'http:port',
         'describe': 'The port to listen on'
     }
 });
@@ -62,7 +70,7 @@ nconf.defaults({
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
