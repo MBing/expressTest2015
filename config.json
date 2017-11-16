@@ -1,5 +1,8 @@
 {
   "http": {
     "port": 8000
+  },
+  "logger": {
+    "filelevel": "error"
   }
 }

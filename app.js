@@ -5,12 +5,34 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nconf = require('nconf');
+var winston = require('winston');
+
+/* Mail winston added, later giving settings */
+// require('winston-mail').Mail; // nothing extra needed, winston-mail will add itself to the winston.transports
+
+winston.add(winston.transports.File, {'filename': 'error.log', 'level': nconf.get('loggerl:filelevel')});
+
+/* Mail settings */
+// winston.add(winston.transports.Mail, {
+//     'to': 'test@mail.com',
+//     'username': 'smtp_username',
+//     'password': 'smtp_password',
+//     'level': 'error'
+// });
+
+// winston.error('something went wrong'); // test to see if file etc works.
+
+/* Winston Profiler */
+// winston.profile('test');
+/* When ran again, it will show elapsed time between */
+// setTimeout(function () {
+//     winston.profile('test');
+// }, 1000);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
 // First in, first serve
 // when you want full control over others. (make it non configurable)
 // when using some other command, this will override anyway
